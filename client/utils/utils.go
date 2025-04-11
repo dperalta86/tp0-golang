@@ -34,12 +34,13 @@ func IniciarConfiguracion(filePath string) *globals.Config {
 	return config
 }
 
-func LeerConsola() {
-	// Leer de la consola
+func LeerConsola() bool {
 	reader := bufio.NewReader(os.Stdin)
-	log.Println("Ingrese los mensajes")
 	text, _ := reader.ReadString('\n')
-	log.Print(text)
+	if text != "\n" {
+		log.Print(text)
+	}
+	return text == "\n"
 }
 
 func GenerarYEnviarPaquete() {
