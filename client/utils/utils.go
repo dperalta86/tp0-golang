@@ -34,21 +34,25 @@ func IniciarConfiguracion(filePath string) *globals.Config {
 	return config
 }
 
-func LeerConsola() bool {
+func LeerConsola() string {
 	reader := bufio.NewReader(os.Stdin)
 	text, _ := reader.ReadString('\n')
-	if text != "\n" {
-		log.Print(text)
-	}
-	return text == "\n"
+	return text
 }
 
 func GenerarYEnviarPaquete() {
 	paquete := Paquete{}
 	// Leemos y cargamos el paquete
+	log.Println("Ingrese los mensajes")
+	var buffer = ""
+	for buffer != "\n" {
+		buffer = LeerConsola()
+		paquete.Valores = append(paquete.Valores, buffer)
+	}
 
 	log.Printf("paqute a enviar: %+v", paquete)
 	// Enviamos el paqute
+	EnviarPaquete(globals.ClientConfig.Ip, globals.ClientConfig.Puerto, paquete)
 }
 
 func EnviarMensaje(ip string, puerto int, mensajeTxt string) {
